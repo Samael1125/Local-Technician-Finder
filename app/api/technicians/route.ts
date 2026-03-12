@@ -20,6 +20,28 @@ const mockTechnicians: Technician[] = [
     },
     rating: 4.9,
     reviewCount: 127,
+    reviews: [
+  {
+    id: "r1",
+    bookingId: "b1",
+    technicianId: "1",
+    customerId: "c1",
+    user: "John D.",
+    rating: 5,
+    comment: "Very professional technician.",
+    createdAt: new Date()
+  },
+  {
+    id: "r2",
+    bookingId: "b2",
+    technicianId: "1",
+    customerId: "c2",
+    user: "Sarah K.",
+    rating: 4,
+    comment: "Fixed my laptop quickly.",
+    createdAt: new Date()
+  }
+],
     verified: true,
     responseTime: "< 2 hours",
     availability: {

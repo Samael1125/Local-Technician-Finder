@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
-
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -114,48 +113,37 @@ export default function TechnicianProfile() {
 </div>
 
             </div>
-            <Card className="mt-6">
-  <CardContent className="p-6">
+            <Card className="mt-8">
+  <CardHeader>
+    <CardTitle>Customer Reviews</CardTitle>
+  </CardHeader>
 
-    <h3 className="text-lg font-semibold mb-4">
-      Customer Reviews
-    </h3>
+  <CardContent className="space-y-4">
+    {technician.reviews && technician.reviews.length > 0 ? (
+      technician.reviews.map((review) => (
+        <div key={review.id} className="border-b pb-4">
 
-    {technician.reviews?.length ? (
-      <div className="space-y-4">
+          <div className="flex items-center justify-between mb-1">
+            <span className="font-medium">{review.user}</span>
 
-        {technician.reviews.map((review) => (
-          <div key={review.id} className="border-b pb-4">
-
-            <div className="flex items-center justify-between">
-
-              <span className="font-medium">
-                {review.user}
-              </span>
-
-              <span className="flex items-center gap-1 text-yellow-500">
-                ⭐ {review.rating}
-              </span>
-
-            </div>
-
-            <p className="text-muted-foreground mt-1">
-              {review.comment}
-            </p>
-
+            <span className="text-yellow-500">
+              {"⭐".repeat(review.rating)}
+            </span>
           </div>
-        ))}
 
-      </div>
+          <p className="text-muted-foreground text-sm">
+            {review.comment}
+          </p>
+
+        </div>
+      ))
     ) : (
       <p className="text-muted-foreground">
         No reviews yet.
       </p>
     )}
-
   </CardContent>
 </Card>
-
 
             {/* Right section */}
             <div className="space-y-4">
