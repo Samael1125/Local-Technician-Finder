@@ -48,10 +48,10 @@ export function Header() {
         <div className="flex items-center space-x-4">
           <ThemeToggle />
           <Button variant="outline" size="sm" asChild className="hidden md:inline-flex bg-transparent">
-            <Link href="/login">Sign In</Link>
+            <Link href="/sign-in">Sign In</Link>
           </Button>
           <Button size="sm" asChild>
-            <Link href="/register">Get Started</Link>
+            <Link href="/get-started">Get Started</Link>
           </Button>
 
           {/* Mobile Menu Button */}
@@ -88,8 +88,8 @@ export function Header() {
             </Link>
             <div className="pt-2 border-t">
               <Button variant="outline" size="sm" asChild className="w-full mb-2 bg-transparent">
-                <Link href="/login">Sign In</Link>
-              </Button>
+  <Link href="/sign-in">Sign In</Link>
+</Button>
             </div>
           </nav>
         </div>
