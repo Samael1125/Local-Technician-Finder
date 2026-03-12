@@ -87,11 +87,12 @@ export default function BookingPage() {
     try {
       const response = await fetch("/api/technicians")
       const technicians = await response.json()
-      const tech = technicians.find((t: Technician) => t.id === id)
+      const tech = technicians.find((t: Technician) => String(t.id) === id)
       setTechnician(tech)
       setLoading(false)
     } catch (error) {
       console.error("Failed to fetch technician:", error)
+      
       setLoading(false)
     }
   }
@@ -99,7 +100,9 @@ export default function BookingPage() {
   const fetchAvailableSlots = () => {
     if (!selectedDate || !technician) return
 
-    const dayName = selectedDate.toLocaleDateString("en-US", { weekday: "lowercase" })
+    const dayName = selectedDate
+  .toLocaleDateString("en-US", { weekday: "long" })
+  .toLowerCase()
     const dayAvailability = technician.availability[dayName]
 
     if (dayAvailability && dayAvailability.length > 0) {
@@ -170,14 +173,14 @@ export default function BookingPage() {
   }
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container py-8">
-          <div className="text-center">Loading booking form...</div>
-        </div>
-      </div>
-    )
-  }
+  return (
+    <div className="max-w-6xl mx-auto py-20 text-center">
+      <p className="text-lg text-muted-foreground">
+        Loading technician details...
+      </p>
+    </div>
+  )
+}
 
   if (!technician) {
     return (
@@ -194,22 +197,22 @@ export default function BookingPage() {
     )
   }
 
-  const isFormValid =
-    bookingData.customerName &&
-    bookingData.customerEmail &&
-    bookingData.customerPhone &&
-    bookingData.serviceType &&
-    bookingData.description &&
-    bookingData.address &&
-    bookingData.city &&
-    bookingData.state &&
-    bookingData.zipCode &&
-    selectedDate &&
-    selectedTime
+const isFormValid =
+  bookingData.customerName &&
+  bookingData.customerEmail &&
+  bookingData.customerPhone &&
+  bookingData.serviceType &&
+  bookingData.description &&
+  bookingData.address &&
+  bookingData.city &&
+  bookingData.state &&
+  bookingData.zipCode &&
+  selectedDate !== undefined &&
+  selectedTime !== ""
 
   return (
     <div className="min-h-screen bg-background py-8">
-      <div className="container max-w-6xl">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-balance mb-4">Book an Appointment</h1>
           <p className="text-lg text-muted-foreground text-balance">Schedule your service with {technician.name}</p>
@@ -372,51 +375,65 @@ export default function BookingPage() {
 
             {/* Date & Time Selection */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <CalendarDays className="h-5 w-5" />
-                  <span>Select Date & Time</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label>Select Date *</Label>
-                    <Calendar
-                      mode="single"
-                      selected={selectedDate}
-                      onSelect={setSelectedDate}
-                      disabled={(date) => date < new Date() || date < new Date("1900-01-01")}
-                      className="rounded-md border"
-                    />
-                  </div>
-                  <div>
-                    <Label>Available Time Slots *</Label>
-                    {selectedDate ? (
-                      <div className="grid grid-cols-2 gap-2 mt-2">
-                        {availableSlots.length > 0 ? (
-                          availableSlots.map((slot) => (
-                            <Button
-                              key={slot}
-                              variant={selectedTime === slot ? "default" : "outline"}
-                              size="sm"
-                              onClick={() => setSelectedTime(slot)}
-                              className="justify-center"
-                            >
-                              {slot}
-                            </Button>
-                          ))
-                        ) : (
-                          <p className="text-sm text-muted-foreground col-span-2">No available slots for this date</p>
-                        )}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">Please select a date first</p>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+  <CardHeader>
+    <CardTitle className="flex items-center space-x-2">
+      <CalendarDays className="h-5 w-5" />
+      <span>Select Date & Time</span>
+    </CardTitle>
+  </CardHeader>
+
+  <CardContent>
+    <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-10">
+
+      {/* Calendar */}
+      <div className="min-w-[420px]">
+        <Label className="mb-3 block">Select Date *</Label>
+
+        <div className="min-w-[420px]">
+          <Calendar
+  mode="single"
+  selected={selectedDate}
+  onSelect={setSelectedDate}
+  disabled={(date) => date < new Date()}
+  className="w-full"
+/>
+        </div>
+      </div>
+
+      {/* Time Slots */}
+      <div className="flex-1">
+        <Label className="mb-3 block">Available Time Slots *</Label>
+
+        {selectedDate ? (
+          <div className="grid grid-cols-3 gap-3">
+            {availableSlots.length > 0 ? (
+              availableSlots.map((slot) => (
+                <Button
+                  key={slot}
+                  variant={selectedTime === slot ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedTime(slot)}
+                  className="w-full"
+                >
+                  {slot}
+                </Button>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground col-span-3">
+                No available slots for this date
+              </p>
+            )}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            Please select a date first
+          </p>
+        )}
+      </div>
+
+    </div>
+  </CardContent>
+</Card>
           </div>
 
           {/* Sidebar */}

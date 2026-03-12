@@ -1,3 +1,20 @@
+export interface TimeSlot {
+  start: string
+  end: string
+  available: boolean
+}
+
+export interface Review {
+  id: string
+  bookingId: string
+  technicianId: string
+  customerId: string
+  user: string
+  rating: number
+  comment: string
+  createdAt: Date
+}
+
 export interface Technician {
   id: string
   name: string
@@ -6,6 +23,7 @@ export interface Technician {
   specialty: string[]
   bio: string
   hourlyRate: number
+
   location: {
     address: string
     city: string
@@ -16,22 +34,21 @@ export interface Technician {
       lng: number
     }
   }
+
   avatar?: string
   rating: number
   reviewCount: number
   verified: boolean
   responseTime: string
+
   availability: {
     [key: string]: TimeSlot[]
   }
+
+  reviews?: Review[]
+
   createdAt: Date
   updatedAt: Date
-}
-
-export interface TimeSlot {
-  start: string
-  end: string
-  available: boolean
 }
 
 export interface Booking {
@@ -40,33 +57,34 @@ export interface Booking {
   customerId: string
   serviceType: string
   description: string
+
   scheduledDate: Date
+
   timeSlot: {
     start: string
     end: string
   }
-  status: "pending" | "confirmed" | "in-progress" | "completed" | "cancelled"
+
+  status:
+    | "pending"
+    | "confirmed"
+    | "in-progress"
+    | "completed"
+    | "cancelled"
+
   location: {
     address: string
     city: string
     state: string
     zipCode: string
   }
+
   estimatedCost: number
   actualCost?: number
   notes?: string
+
   createdAt: Date
   updatedAt: Date
-}
-
-export interface Review {
-  id: string
-  bookingId: string
-  technicianId: string
-  customerId: string
-  rating: number
-  comment: string
-  createdAt: Date
 }
 
 export interface User {

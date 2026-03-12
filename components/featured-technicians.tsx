@@ -55,7 +55,7 @@ export function FeaturedTechnicians() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
           {featuredTechnicians.map((tech) => (
             <Card key={tech.id} className="hover:shadow-lg transition-all duration-200">
               <CardContent className="p-6">
@@ -104,7 +104,7 @@ export function FeaturedTechnicians() {
                   </div>
                 </div>
 
-                <div className="flex space-x-2">
+                <div className="flex gap-2 mt-4">
                   <Button size="sm" className="flex-1" asChild>
                     <Link href={`/technicians/${tech.id}`}>View Profile</Link>
                   </Button>
@@ -117,11 +117,11 @@ export function FeaturedTechnicians() {
           ))}
         </div>
 
-        <div className="text-center">
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/technicians">View All Technicians</Link>
-          </Button>
-        </div>
+        <div className="text-center mt-16 pt-4">
+  <Button size="lg" variant="outline" asChild>
+    <Link href="/technicians">View All Technicians</Link>
+  </Button>
+</div>
       </div>
     </section>
   )

@@ -127,17 +127,23 @@ export default function BecomeTechnicianPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-background py-8">
-      <div className="container max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-balance mb-4">Join Our Network of Technicians</h1>
-          <p className="text-lg text-muted-foreground text-balance">Start earning by helping customers in your area</p>
-        </div>
+  <div className="min-h-screen bg-background py-10 flex justify-center">
+
+    <div className="max-w-4xl w-full px-6">
+
+      {/* Header */}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold mb-4">
+          Join Our Network of Technicians
+        </h1>
+        <p className="text-lg text-muted-foreground">
+          Start earning by helping customers in your area
+        </p>
+      </div>
 
         {/* Progress Steps */}
         <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-center gap-6 flex-wrap">
             {steps.map((step, index) => {
               const Icon = step.icon
               const isActive = currentStep === step.number
